@@ -5,7 +5,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 let list = document.querySelector('.gallery');
 
-/****** Створення і рендер розмітки на підставі масиву даних galleryItems і наданого шаблону елемента галереї. ******/
+/****** Create and render markup  ******/
 const markup = galleryItems
   .map(
     ({ preview, original, description }) =>
