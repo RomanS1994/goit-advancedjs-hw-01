@@ -6,7 +6,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 let list = document.querySelector('.gallery');
 
 /****** Створення і рендер розмітки на підставі масиву даних galleryItems і наданого шаблону елемента галереї. ******/
-
 const markup = galleryItems
   .map(
     ({ preview, original, description }) =>
@@ -24,8 +23,9 @@ const markup = galleryItems
   .join('');
 
 list.insertAdjacentHTML('afterbegin', markup);
+
+/****** add SimpleLightbox ******/
 var lightbox = new SimpleLightbox('.gallery a', {
-  // navText: ['←', '→'],
   captionsData: 'alt',
   captionDelay: 350,
   animationSpeed: 600,
