@@ -7,10 +7,10 @@ const LS_KEY = 'videoplayer-current-time';
 
 player.on(
   'timeupdate',
-  throttle(data => {
-    localStorage.setItem(LS_KEY, JSON.stringify(data.seconds));
+  throttle(({ seconds }) => {
+    localStorage.setItem(LS_KEY, seconds);
   }, 2000)
 );
 
-const currentTime = localStorage.getItem(LS_KEY);
+const currentTime = localStorage.getItem(LS_KEY) || 0;
 player.setCurrentTime(JSON.parse(currentTime));

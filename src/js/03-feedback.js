@@ -15,12 +15,18 @@ function handlerInput() {
 }
 
 form.addEventListener('submit', handlerSubmit);
+
 function handlerSubmit(evt) {
   evt.preventDefault();
   const data = JSON.parse(localStorage.getItem(LS_KEY));
-  console.log(data);
-  localStorage.removeItem(LS_KEY);
-  evt.currentTarget.reset();
+
+  if (data && data.email && data.message) {
+    console.log(data);
+    localStorage.removeItem(LS_KEY);
+    evt.currentTarget.reset();
+  } else {
+    alert('enter data in both fields');
+  }
 }
 
 function checkValues() {
