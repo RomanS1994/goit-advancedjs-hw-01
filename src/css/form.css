@@ -1,0 +1,12 @@
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 300px;
+  margin-top: 36px;
+}
+
+.feedback-form label {
+  display: flex;
+  flex-direction: column;
+}
