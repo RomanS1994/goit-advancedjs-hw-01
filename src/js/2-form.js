@@ -1,4 +1,4 @@
-const formData = {
+let formData = {
   email: '',
   message: '',
 };
@@ -7,51 +7,62 @@ const refs = {
   form: document.querySelector('.feedback-form'),
 };
 
-function handlerClick(event) {
-  const { name, value } = event.target;
+// Завантаження збережених даних з localStorage
+function loadSavedFormData() {
+  const savedData = localStorage.getItem('feedback-form-state');
 
-  if (name in formData) {
-    formData[name] = value.trim();
-  }
-  saveLS(formData);
+  if (!savedData) return;
+
+  // Оновлення formData з localStorage
+  formData = JSON.parse(savedData);
+
+  refs.form.elements.email.value = formData.email || '';
+  refs.form.elements.message.value = formData.message || '';
 }
 
-function handlerSubmit(event) {
-  event.preventDefault();
-
-  if (
-    event.target.elements.email.value == '' ||
-    event.target.elements.message.value == ''
-  ) {
-    alert('Fill please all fields');
-  } else {
-    console.log(formData);
-    event.target.elements.email.value = '';
-    event.target.elements.message.value = '';
-
-    clearLs();
-  }
-}
-
+// Збереження у localStorage
 function saveLS(obj) {
   localStorage.setItem('feedback-form-state', JSON.stringify(obj));
 }
 
+// Очищення localStorage
 function clearLs() {
   localStorage.removeItem('feedback-form-state');
 }
 
-function loadSavedFormData() {
-  const saveData = JSON.parse(localStorage.getItem('feedback-form-state'));
+// Обробка події введення
+function handlerInput(event) {
+  const { name, value } = event.target;
 
-  if (!saveData) {
-    return;
-  } else {
-    refs.form.elements.email.value = saveData.email;
-    refs.form.elements.message.value = saveData.message;
+  if (name in formData) {
+    formData[name] = value.trim();
+    saveLS(formData);
   }
 }
-refs.form.addEventListener('input', handlerClick);
+
+// Обробка подання форми
+function handlerSubmit(event) {
+  event.preventDefault();
+
+  const { email, message } = event.target.elements;
+
+  if (email.value.trim() === '' || message.value.trim() === '') {
+    alert('Fill please all fields');
+    return;
+  }
+
+  console.log('Form submitted:', formData);
+
+  // Очищення полів та formData
+  formData = { email: '', message: '' };
+  email.value = '';
+  message.value = '';
+  clearLs();
+}
+
+refs.form.addEventListener('input', handlerInput);
 refs.form.addEventListener('submit', handlerSubmit);
+
+// Завантаження збережених даних при старті
 
 loadSavedFormData();
